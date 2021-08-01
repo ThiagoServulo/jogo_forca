@@ -2,10 +2,11 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from PySide2 import QtWidgets
-
+import sys
 
 class Ui_tela_resultado(object):
     def setupUi(self, tela_resultado):
+        self.quit = self.findChild(QtWidgets.QAction, "actionExit")
         if not tela_resultado.objectName():
             tela_resultado.setObjectName(u"tela_resultado")
         tela_resultado.resize(326, 240)
@@ -35,10 +36,9 @@ class Ui_tela_resultado(object):
         self.botao_sair.setGeometry(QRect(40, 160, 111, 41))
         self.botao_sair.setFont(font1)
         tela_resultado.setCentralWidget(self.centralwidget)
-
         self.retranslateUi(tela_resultado)
-
         QMetaObject.connectSlotsByName(tela_resultado)
+
     # setupUi
 
     def retranslateUi(self, tela_resultado):
@@ -54,3 +54,13 @@ class CriarTelaResultado(QtWidgets.QMainWindow, Ui_tela_resultado):
     def __init__(self):
         super(CriarTelaResultado, self).__init__()
         self.setupUi(self)
+
+    def closeEvent(self, event):
+        reply = QMessageBox.question(self, 'Sair do jogo', 'Deseja sair do jogo?',
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            event.accept()
+            sys.exit()
+        else:
+            event.ignore()

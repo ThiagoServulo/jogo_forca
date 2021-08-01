@@ -23,6 +23,7 @@ class Ui_MainWindow(object):
         self.menu_novo_jogo.setObjectName(u"menu_novo_jogo")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.tela_resultado = CriarTelaResultado()
         self.forca = QLabel(self.centralwidget)
         self.forca.setObjectName(u"forca")
         self.forca.setGeometry(QRect(80, 80, 271, 341))
@@ -376,7 +377,14 @@ class Ui_MainWindow(object):
         self.botao_letra_z.clicked.connect(self.letra_z)
         self.botao_letra_w.clicked.connect(self.letra_w)
         self.botao_arriscar.clicked.connect(self.arriscar_palavra)
+        self.tela_resultado.botao_novo_jogo.clicked.connect(self.novo_jogo)
+        self.menu_novo_jogo.triggered.connect(self.abondonar_jogo)
+
     # setupUi
+
+    def closeEvent(self, event):
+        print('aaa')
+
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
@@ -449,6 +457,9 @@ class Ui_MainWindow(object):
     # retranslateUi
 
     def zerar_jogo(self):
+        Ui_MainWindow.chances_jogador = 6
+        Ui_MainWindow.letras_advinhadas = 0
+        self.palavra_texto.setText('')
         self.cabeca.hide()
         self.perna_esquerda.hide()
         self.perna_direita.hide()
@@ -468,6 +479,32 @@ class Ui_MainWindow(object):
         self.letra_11.hide()
         self.letra_12.hide()
         self.letra_13.hide()
+        self.botao_letra_a.setEnabled(True)
+        self.botao_letra_b.setEnabled(True)
+        self.botao_letra_c.setEnabled(True)
+        self.botao_letra_d.setEnabled(True)
+        self.botao_letra_e.setEnabled(True)
+        self.botao_letra_f.setEnabled(True)
+        self.botao_letra_g.setEnabled(True)
+        self.botao_letra_h.setEnabled(True)
+        self.botao_letra_i.setEnabled(True)
+        self.botao_letra_j.setEnabled(True)
+        self.botao_letra_k.setEnabled(True)
+        self.botao_letra_l.setEnabled(True)
+        self.botao_letra_m.setEnabled(True)
+        self.botao_letra_n.setEnabled(True)
+        self.botao_letra_o.setEnabled(True)
+        self.botao_letra_p.setEnabled(True)
+        self.botao_letra_q.setEnabled(True)
+        self.botao_letra_r.setEnabled(True)
+        self.botao_letra_s.setEnabled(True)
+        self.botao_letra_t.setEnabled(True)
+        self.botao_letra_u.setEnabled(True)
+        self.botao_letra_v.setEnabled(True)
+        self.botao_letra_x.setEnabled(True)
+        self.botao_letra_w.setEnabled(True)
+        self.botao_letra_y.setEnabled(True)
+        self.botao_letra_z.setEnabled(True)
         self.traco_1.hide()
         self.traco_2.hide()
         self.traco_3.hide()
@@ -671,7 +708,7 @@ class Ui_MainWindow(object):
                     self.mostrar_letra(index + 1, self.__palavra_sorteada[index])
                     Ui_MainWindow.letras_advinhadas += 1
                     if Ui_MainWindow.letras_advinhadas == len(self.__palavra_normalizada):
-                        self.mostra_tela_resultado('derrota')
+                        self.mostra_tela_resultado('vitoria')
                 index += 1
         else:
             self.adicionar_erro()
@@ -703,13 +740,22 @@ class Ui_MainWindow(object):
         Ui_MainWindow.chances_jogador -= 1
 
     def mostra_tela_resultado(self, resultado):
-        self.tela_resultado = CriarTelaResultado()
         if resultado == 'derrota':
             self.tela_resultado.label_resultado.setText('Você perdeu')
-        if resultado == 'vitoria':
+        elif resultado == 'vitoria':
             self.tela_resultado.label_resultado.setText('Você ganhou')
+        elif resultado == 'desistencia':
+            self.tela_resultado.label_resultado.setText('Você desistiu')
         self.tela_resultado.label_palavra.setText(f'A palavra era: {self.__palavra_sorteada}')
         self.tela_resultado.show()
+
+    def novo_jogo(self):
+        self.zerar_jogo()
+        self.gerar_palavra()
+        self.tela_resultado.close()
+
+    def abondonar_jogo(self):
+        self.mostra_tela_resultado('desistencia')
 
 
 class CriarTelaPrincipal(QtWidgets.QMainWindow, Ui_MainWindow):
