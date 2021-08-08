@@ -11,6 +11,9 @@ class Ui_tela_resultado(object):
             tela_resultado.setObjectName(u"tela_resultado")
         tela_resultado.resize(326, 240)
         tela_resultado.setMaximumSize(QSize(800, 800))
+        icon = QIcon()
+        icon.addFile(u"icone_forca.png", QSize(), QIcon.Normal, QIcon.Off)
+        tela_resultado.setWindowIcon(icon)
         self.centralwidget = QWidget(tela_resultado)
         self.centralwidget.setObjectName(u"centralwidget")
         self.label_resultado = QLabel(self.centralwidget)
@@ -31,6 +34,7 @@ class Ui_tela_resultado(object):
         self.botao_novo_jogo.setObjectName(u"botao_novo_jogo")
         self.botao_novo_jogo.setGeometry(QRect(170, 160, 111, 41))
         self.botao_novo_jogo.setFont(font1)
+        self.botao_novo_jogo.setShortcut("Enter")
         self.botao_sair = QPushButton(self.centralwidget)
         self.botao_sair.setObjectName(u"botao_sair")
         self.botao_sair.setGeometry(QRect(40, 160, 111, 41))
@@ -47,6 +51,7 @@ class Ui_tela_resultado(object):
         self.label_palavra.setText(QCoreApplication.translate("tela_resultado", u"", None))
         self.botao_novo_jogo.setText(QCoreApplication.translate("tela_resultado", u"Novo Jogo", None))
         self.botao_sair.setText(QCoreApplication.translate("tela_resultado", u"Sair", None))
+        self.botao_novo_jogo.setShortcut(QCoreApplication.translate("MainWindow", u"Enter", None))
     # retranslateUi
 
 
@@ -55,7 +60,7 @@ class CriarTelaResultado(QtWidgets.QMainWindow, Ui_tela_resultado):
         super(CriarTelaResultado, self).__init__()
         self.setupUi(self)
 
-    def closeEvent(self, event):
+    def closeEvent(self, event): 
         reply = QMessageBox.question(self, 'Sair do jogo', 'Deseja sair do jogo?',
                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 

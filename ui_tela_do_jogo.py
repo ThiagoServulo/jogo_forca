@@ -6,6 +6,7 @@ from PySide2 import QtWidgets
 from palavras import sortear_palavra
 from ui_tela_resultado import CriarTelaResultado
 from unicodedata import normalize
+import sys
 
 
 class Ui_MainWindow(object):
@@ -19,6 +20,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(765, 577)
         MainWindow.setMaximumSize(QSize(800, 800))
         MainWindow.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        icon = QIcon()
+        icon.addFile(u"icone_forca.png", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.menu_novo_jogo = QAction(MainWindow)
         self.menu_novo_jogo.setObjectName(u"menu_novo_jogo")
         self.centralwidget = QWidget(MainWindow)
@@ -327,6 +331,7 @@ class Ui_MainWindow(object):
         self.botao_arriscar.setObjectName(u"botao_arriscar")
         self.botao_arriscar.setGeometry(QRect(90, 80, 91, 31))
         self.botao_arriscar.setFont(font)
+        self.botao_arriscar.setShortcut("F1")
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(110, 20, 251, 41))
@@ -379,12 +384,8 @@ class Ui_MainWindow(object):
         self.botao_arriscar.clicked.connect(self.arriscar_palavra)
         self.tela_resultado.botao_novo_jogo.clicked.connect(self.novo_jogo)
         self.menu_novo_jogo.triggered.connect(self.abondonar_jogo)
-
+        self.tela_resultado.botao_sair.clicked.connect(self.tela_resultado.close)
     # setupUi
-
-    def closeEvent(self, event):
-        print('aaa')
-
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
@@ -454,6 +455,7 @@ class Ui_MainWindow(object):
         self.botao_arriscar.setText(QCoreApplication.translate("MainWindow", u"Arriscar", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Jogo da Forca", None))
         self.menu_jogo.setTitle(QCoreApplication.translate("MainWindow", u"Jogo", None))
+        self.botao_arriscar.setShortcut(QCoreApplication.translate("MainWindow", u"Enter", None))
     # retranslateUi
 
     def zerar_jogo(self):
@@ -628,7 +630,7 @@ class Ui_MainWindow(object):
         self.__palavra_sorteada = palavra_sorteada
         self.__palavra_normalizada = palavra_normalizada
         self.iniciar_tracos()
-        print(self.__palavra_sorteada)
+        # print(self.__palavra_sorteada)
 
     def iniciar_tracos(self):
         quantidade = len(self.__palavra_sorteada)
@@ -752,7 +754,7 @@ class Ui_MainWindow(object):
     def novo_jogo(self):
         self.zerar_jogo()
         self.gerar_palavra()
-        self.tela_resultado.close()
+        self.tela_resultado.hide()
 
     def abondonar_jogo(self):
         self.mostra_tela_resultado('desistencia')
@@ -764,3 +766,7 @@ class CriarTelaPrincipal(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.zerar_jogo()
         self.gerar_palavra()
+
+    def closeEvent(self, event):
+            event.accept()
+            sys.exit()
