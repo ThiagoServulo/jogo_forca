@@ -5,6 +5,7 @@ from PySide2.QtWidgets import *
 from PySide2 import QtWidgets
 from palavras import sortear_palavra
 from ui_tela_resultado import CriarTelaResultado
+from ui_tela_estatisticas import CriarTelaEstatisticas, Ui_tela_estatisticas
 from unicodedata import normalize
 import sys
 
@@ -18,16 +19,20 @@ class Ui_MainWindow(object):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(765, 577)
-        MainWindow.setMaximumSize(QSize(800, 800))
+        MainWindow.setMinimumSize(QSize(765, 577))
+        MainWindow.setMaximumSize(QSize(765, 577))
         MainWindow.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         icon = QIcon()
         icon.addFile(u"icone_forca.png", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.menu_novo_jogo = QAction(MainWindow)
         self.menu_novo_jogo.setObjectName(u"menu_novo_jogo")
+        self.menu_estatisticas = QAction(MainWindow)
+        self.menu_estatisticas.setObjectName(u"menu_estatisticas")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.tela_resultado = CriarTelaResultado()
+        self.tela_estatisticas = CriarTelaEstatisticas()
         self.forca = QLabel(self.centralwidget)
         self.forca.setObjectName(u"forca")
         self.forca.setGeometry(QRect(80, 80, 271, 341))
@@ -336,9 +341,9 @@ class Ui_MainWindow(object):
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(110, 20, 251, 41))
         font3 = QFont()
-        font3.setFamily(u"Pristina")
+        font3.setFamily(u"Arial")
         font3.setPointSize(25)
-        font3.setBold(False)
+        font3.setBold(True)
         font3.setWeight(50)
         font3.setStrikeOut(False)
         self.label.setFont(font3)
@@ -351,6 +356,7 @@ class Ui_MainWindow(object):
         MainWindow.setMenuBar(self.menuBar)
         self.menuBar.addAction(self.menu_jogo.menuAction())
         self.menu_jogo.addAction(self.menu_novo_jogo)
+        self.menu_jogo.addAction(self.menu_estatisticas)
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -382,14 +388,19 @@ class Ui_MainWindow(object):
         self.botao_letra_z.clicked.connect(self.letra_z)
         self.botao_letra_w.clicked.connect(self.letra_w)
         self.botao_arriscar.clicked.connect(self.arriscar_palavra)
+        self.tela_estatisticas.ler_arquivo_estatisticas()
         self.tela_resultado.botao_novo_jogo.clicked.connect(self.novo_jogo)
         self.menu_novo_jogo.triggered.connect(self.abondonar_jogo)
+        self.menu_estatisticas.triggered.connect(self.tela_estatisticas.carregar_tela_resultados)
         self.tela_resultado.botao_sair.clicked.connect(self.tela_resultado.close)
+        self.tela_estatisticas.botao_zerar_estatisticas.clicked.connect(self.tela_estatisticas.zerar_estatisticas)
+        self.tela_estatisticas.botao_sair.clicked.connect(self.tela_estatisticas.close)
     # setupUi
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.menu_novo_jogo.setText(QCoreApplication.translate("MainWindow", u"Novo Jogo", None))
+        self.menu_estatisticas.setText(QCoreApplication.translate("MainWindow", u"Estatísticas", None))
         self.forca.setText("")
         self.cabeca.setText("")
         self.corpo.setText("")
@@ -743,10 +754,13 @@ class Ui_MainWindow(object):
 
     def mostra_tela_resultado(self, resultado):
         if resultado == 'derrota':
+            Ui_tela_estatisticas.dict_resultados['derrotas'] += 1
             self.tela_resultado.label_resultado.setText('Você perdeu')
         elif resultado == 'vitoria':
+            Ui_tela_estatisticas.dict_resultados['vitorias'] += 1
             self.tela_resultado.label_resultado.setText('Você ganhou')
         elif resultado == 'desistencia':
+            Ui_tela_estatisticas.dict_resultados['desistencias'] += 1
             self.tela_resultado.label_resultado.setText('Você desistiu')
         self.tela_resultado.label_palavra.setText(f'A palavra era: {self.__palavra_sorteada}')
         self.tela_resultado.show()
@@ -768,5 +782,6 @@ class CriarTelaPrincipal(QtWidgets.QMainWindow, Ui_MainWindow):
         self.gerar_palavra()
 
     def closeEvent(self, event):
+            self.tela_estatisticas.escrever_arquivo_estatisticas()
             event.accept()
             sys.exit()

@@ -16,7 +16,12 @@ palavras = ['Carnaval', 'Cachorro', 'Geladeira', 'Televisão', 'Celular', 'Veíc
             'Fechadura', 'Girafa', 'Borboleta', 'Calculadora', 'Presente', 'Papelão', 'Alumínio', 'Plástico',
             'Ferrugem', 'Girassol', 'Júpter', 'Saturno', 'Laranja', 'Vermelho', 'Cabeça', 'Feriado', 'Sábado',
             'Domingo', 'Prateleiras', 'Diferenças', 'Entretanto', 'Privilégio', 'Ratoeira', 'Tornozeleira',
-            'Extensão', 'Gratidão', 'Vagabundo', 'Esperança']
+            'Extensão', 'Gratidão', 'Vagabundo', 'Esperança', 'Gravata', 'Corroborar', 'Colaborador', 'Pragmático',
+            'Predador', 'Fundamental', 'Tributação', 'Heterogêneo', 'Capacidade', 'Relacionado', 'Expectativa',
+            'Indiferente', 'Lâmpada', 'Pretensioso', 'Apresentar', 'Carboidrato', 'Proteína', 'Salvador',
+            'Transcender', 'Coerente', 'Concorrente', 'Capacitar', 'Superficial', 'Vocabulário', 'Cumprimento',
+            'Celulose', 'Prateleira', 'Ventilador', 'Divergência', 'Conferência', 'Resistência', 'Oportunista',
+            'Importância', 'Ambiguidade', 'Generalizar', 'Integridade', 'Excepcional', 'Austeridade', 'Desenvolver']
 
 
 def sortear_palavra():

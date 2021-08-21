@@ -1,0 +1,1 @@
+{'vitorias': 0, 'derrotas': 0, 'desistencias': 0}

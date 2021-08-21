@@ -10,7 +10,8 @@ class Ui_tela_resultado(object):
         if not tela_resultado.objectName():
             tela_resultado.setObjectName(u"tela_resultado")
         tela_resultado.resize(326, 240)
-        tela_resultado.setMaximumSize(QSize(800, 800))
+        tela_resultado.setMinimumSize(QSize(326, 240))
+        tela_resultado.setMaximumSize(QSize(326, 240))
         icon = QIcon()
         icon.addFile(u"icone_forca.png", QSize(), QIcon.Normal, QIcon.Off)
         tela_resultado.setWindowIcon(icon)

@@ -1240,12 +1240,18 @@
      <string>Jogo</string>
     </property>
     <addaction name="menu_novo_jogo"/>
+    <addaction name="menu_estatisticas"/>
    </widget>
    <addaction name="menu_jogo"/>
   </widget>
   <action name="menu_novo_jogo">
    <property name="text">
     <string>Novo Jogo</string>
+   </property>
+  </action>
+  <action name="menu_estatisticas">
+   <property name="text">
+    <string>Estatísticas</string>
    </property>
   </action>
  </widget>
