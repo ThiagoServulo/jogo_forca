@@ -3,7 +3,6 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 from PySide2 import QtWidgets
 import ast
-import os
 
 class Ui_tela_estatisticas(object):
 
@@ -106,14 +105,7 @@ class Ui_tela_estatisticas(object):
                 self.label_derrotas.setText(f"Derrotas: {Ui_tela_estatisticas.dict_resultados['derrotas']}")
                 self.label_desistencias.setText(f"Desistências: {Ui_tela_estatisticas.dict_resultados['desistencias']}")
         except FileNotFoundError:
-            self.label_vitorias.setText('erro 1')
             print('Erro ao zerar dados no arquivo')
-        except FileExistsError:
-            print(f'aaa')
-            self.label_vitorias.setText('erro 2')
-        except Exception as err:
-            print(f'{err}')
-            self.label_vitorias.setText(f'{err}')
     # zerar_estatisticas
 
 
